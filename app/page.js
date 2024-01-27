@@ -31,50 +31,7 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
- 
-    // if (price.now < 0 || price.mounth < 0 || nameBot === '' || !commands || discord === '' || mail === '') {
-    //   alert('Merci de rentrer les champs obligatoires');
-    //   return;
-    // }
-
-    const queryParams = new URLSearchParams({
-      nameBot,
-      price: JSON.stringify(price), // Convertissez price en chaîne JSON
-      descriptionBot,
-      imageBot,
-      hostBot,
-      activityBot,
-      activityBotDescription,
-      commands: JSON.stringify(commands), // Convertissez commands en chaîne JSON
-      delay,
-      command,
-      description,
-      discord,
-      mail,
-      jsonData: JSON.stringify(jsonData), // Convertissez jsonData en chaîne JSON
-      commandsDescription: JSON.stringify(commandsDescription), // Convertissez commandsDescription en chaîne JSON
-    });
-
-    try {
-      // Utilisez les paramètres d'URL dans l'URL de la requête GET
-      const response = await fetch(`/api/send.js?${queryParams}`, {
-        method: 'GET',
-      
-      });
-    
-      console.log(response);
-    
-      if (response.ok) {
-        alert(`Merci pour votre intérêt! Nous vous répondrons bientôt !`);
-        // Réinitialisez le formulaire ou naviguez vers une page de réussite
-      } else {
-        alert('Excuses! Veuillez réessayer.');
-      }
-    } catch (error) {
-      alert('Oups ! Malheureusement, une erreur s\'est produite.');
-    }
-  };
+  }
 
   return (
     <main>
