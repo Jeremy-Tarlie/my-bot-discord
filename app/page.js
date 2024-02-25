@@ -40,7 +40,7 @@ export default function Home() {
     try {
       if (captcha) {
         // Construisez l'URL avec les données du formulaire
-        const queryParams = new URLSearchParams({
+        const data = new URLSearchParams({
           nameBot,
           price: JSON.stringify(price),
           descriptionBot,
