@@ -1,5 +1,5 @@
 
-import sendMail  from "../../service/mailService";
+import sendMail  from "./send.js";
 
 export default async (req, res) => {
   try {
