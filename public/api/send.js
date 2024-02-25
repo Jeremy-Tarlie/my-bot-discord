@@ -1,20 +1,31 @@
-// api/send.js
 
-import { Resend } from 'resend';
 
-const resend = new Resend("re_cqe7HrdN_69m9n6rX2LBDpyb4cv5yV7X9");
+var nodemailer = require("nodemailer");
+//-----------------------------------------------------------------------------
+export async function sendMail(subject, toEmail, otpText) {
+    var transporter = nodemailer.createTransport({
+        host: "sandbox.smtp.mailtrap.io",
+        port: 2525,
+        auth: {
+          user: "5b89ebd2adee97",
+          pass: "4ce0693f3f1759"
+        }
+      });
 
-(async function () {
-  const { data, error } = await resend.emails.send({
-    from: 'contact@tarlie.fr',
-    to: ['discord@tarlie.fr'],
-    subject: 'Hello World',
-    html: '<strong>It works!</strong>',
+  var mailOptions = {
+    from: 'khraii@outlook.fr',
+    to: "contact@tarlie.fr",
+    subject: "Hello ✔",
+    text: "Hello world?",
+    html: "<b>Hello world?</b>",
+};
+
+  transporter.sendMail(mailOptions, function (error, info) {
+    if (error) {
+      throw new Error(error);
+    } else {
+      console.log("Email Sent");
+      return true;
+    }
   });
-
-  if (error) {
-    return console.error({ error });
-  }
-
-  console.log({ data });
-})();
+}

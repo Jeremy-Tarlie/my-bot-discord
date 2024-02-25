@@ -29,49 +29,47 @@ export default function Home() {
   const [discord, setDiscord] = useState('');
   const [mail, setMail] = useState('');
 
+  const [captcha, setCaptcha] = useState("");
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
- 
-    // if (price.now < 0 || price.mounth < 0 || nameBot === '' || !commands || discord === '' || mail === '') {
-    //   alert('Merci de rentrer les champs obligatoires');
-    //   return;
-    // }
-
-    const queryParams = new URLSearchParams({
-      nameBot,
-      price: JSON.stringify(price), // Convertissez price en chaîne JSON
-      descriptionBot,
-      imageBot,
-      hostBot,
-      activityBot,
-      activityBotDescription,
-      commands: JSON.stringify(commands), // Convertissez commands en chaîne JSON
-      delay,
-      command,
-      description,
-      discord,
-      mail,
-      jsonData: JSON.stringify(jsonData), // Convertissez jsonData en chaîne JSON
-      commandsDescription: JSON.stringify(commandsDescription), // Convertissez commandsDescription en chaîne JSON
-    });
 
     try {
-      // Utilisez les paramètres d'URL dans l'URL de la requête GET
-      const response = await fetch(`/api/send.js?${queryParams}`, {
-        method: 'GET',
-      
-      });
-    
-      console.log(response);
-    
-      if (response.ok) {
-        alert(`Merci pour votre intérêt! Nous vous répondrons bientôt !`);
-        // Réinitialisez le formulaire ou naviguez vers une page de réussite
-      } else {
+      if (captcha) {
+        // Construisez l'URL avec les données du formulaire
+        const queryParams = new URLSearchParams({
+          nameBot,
+          price: JSON.stringify(price),
+          descriptionBot,
+          // ... (autres données du formulaire) ...
+        });
+
+        // Utilisez les paramètres d'URL dans l'URL de la requête GET
+        const response = await fetch(`/api/sendTest.js`, {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept' : "application/json"
+          },
+        });
+        
+        console.log(response.json());
+        console.log(response);
+
+        if (response.ok) {
+          alert(`Merci pour votre intérêt! Nous vous répondrons bientôt !`);
+          // Réinitialisez le formulaire ou naviguez vers une page de réussite
+        }
+      }
+       else {
         alert('Excuses! Veuillez réessayer.');
       }
     } catch (error) {
+      console.log(error);
       alert('Oups ! Malheureusement, une erreur s\'est produite.');
     }
   };
@@ -127,6 +125,8 @@ export default function Home() {
             setMail={setMail}
             commandsDescription = {commandsDescription}
             setCommandsDescription = {setCommandsDescription}
+            captcha={captcha} 
+            setCaptcha={setCaptcha}
           />
         )}
 

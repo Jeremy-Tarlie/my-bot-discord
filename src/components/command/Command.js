@@ -12,7 +12,7 @@ import Email from '@/src/components/command/Email';
 import styles from '@/app/page.module.css';
 import styles_command from '@/src/assets/css/command.module.css';
 
-const Command = ({price, setPrice, commands, setCommands, delay, setDelay, jsonData, setJsonData, command, setCommand, description, setDescription, numberCommand, setNumberCommand,  mail, setMail, discord, setDiscord, commandsDescription, setCommandsDescription}) => {
+const Command = ({price, setPrice, commands, setCommands, delay, setDelay, jsonData, setJsonData, command, setCommand, description, setDescription, numberCommand, setNumberCommand,  mail, setMail, discord, setDiscord, commandsDescription, setCommandsDescription, captcha, setCaptcha}) => {
 
   return (
     <div className={`${styles.d_flex} ${styles.justify_space_around} ${styles_command.command_all}`}>
@@ -49,7 +49,7 @@ const Command = ({price, setPrice, commands, setCommands, delay, setDelay, jsonD
               <Discord styles_command={styles_command} styles={styles} discord={discord} setDiscord={setDiscord}/>
               <Email styles_command={styles_command} styles={styles}  mail={mail} setMail={setMail}/>
             </div>
-            <Delivery styles_command={styles_command} styles={styles}/>
+            <Delivery styles_command={styles_command} styles={styles} captcha={captcha} setCaptcha={setCaptcha}/>
         </div>
     </div>
   )

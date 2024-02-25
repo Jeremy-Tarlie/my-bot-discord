@@ -12,7 +12,7 @@ const Title_bot = ({name, setName, style, style_bot}) => {
 
   return (
     <div  className={`${style.d_flex_column} ${style_bot.width_40}`}>
-      <label>Le nom du bot : </label>
+      <label>Le nom du bot : <span className={style.required}>*</span></label>
       <input type="text" onChange={nameChange} value={name}/>
     </div>
   )

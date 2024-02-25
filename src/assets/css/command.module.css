@@ -79,6 +79,11 @@
   margin: 10px;
 }
 
+.recaptcha{
+  margin: 10px auto;
+  width: 304px;
+}
+
 @media screen and (max-width: 999px) {
   .command_all{
     flex-direction: column;
