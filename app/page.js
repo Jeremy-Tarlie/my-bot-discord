@@ -39,6 +39,11 @@ export default function Home() {
 
     try {
       if (captcha) {
+    <<<<<<< HEAD
+
+
+    try {
+      if (captcha) {
         // Construisez l'URL avec les données du formulaire
         const queryParams = new URLSearchParams({
           nameBot,
@@ -73,12 +78,10 @@ export default function Home() {
       alert('Oups ! Malheureusement, une erreur s\'est produite.');
     }
   };
-
-  return (
-    <main>
-      <Header />
-      <form onSubmit={handleSubmit} method="GET">
-        {numberStep === 0 ? (
+=======
+  }
+>>>>>>> ac6e4e1f91636d9147432e87807ba2a19664e465
+=== 0 ? (
           <>
             <Card title="Commander le bot de vos rêves" description="Explorez l'opportunité passionnante de personnaliser et d'acquérir le bot parfaitement adapté à vos aspirations et besoins uniques." number={1} />
             <Card title="Un bot personnalisé avec des fonctions innovantes" description="Découvrez l'exclusivité d'un assistant virtuel façonné selon vos exigences, doté de fonctionnalités novatrices pour une expérience inégalée." number={2} />
