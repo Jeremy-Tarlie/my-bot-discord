@@ -9,7 +9,7 @@ export default async (req, res) => {
         //Do some thing
         await sendMail(
           "TEST",
-          "dontkillme@bunnyfiedlabs.com",
+          "test@test.fr",
           "THI IS A TEST FOR MY MEDIUM USERS"
         );
         res.status(200).send("Success");
