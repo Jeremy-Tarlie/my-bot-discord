@@ -4,17 +4,18 @@ var nodemailer = require("nodemailer");
 //-----------------------------------------------------------------------------
 export async function sendMail(subject, toEmail, otpText) {
     var transporter = nodemailer.createTransport({
-        host: "sandbox.smtp.mailtrap.io",
+        service: "Outlook365",
+        host: "smtp.office365.com",
         port: 2525,
         auth: {
-          user: "5b89ebd2adee97",
-          pass: "4ce0693f3f1759"
+          user: "*******",
+          pass: "*******"
         }
       });
 
   var mailOptions = {
-    from: 'khraii@outlook.fr',
-    to: "contact@tarlie.fr",
+    from: 'test@test.fr',
+    to: "test@test.fr",
     subject: "Hello ✔",
     text: "Hello world?",
     html: "<b>Hello world?</b>",
