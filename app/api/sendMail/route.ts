@@ -1,5 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
-var nodemailer = require("nodemailer");
+// import nodemailer from "nodemailer";
+var nodemailer = require('nodemailer');
+import { Buffer } from 'buffer';
 
 interface Command {
     name: string;
@@ -23,11 +25,21 @@ interface RequestData {
     jsonData: string;
 }
 
+const transporter = nodemailer.createTransport({
+    host: 'mail.tarlie.fr',
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.PRIVARY_MAIL_USER,
+        pass: process.env.PRIVARY_MAIL_PASSWORD
+    }
+});
+
 export async function POST(req: NextRequest) {
     if (req.method === "POST") {
         try {
-            const requestData: RequestData = req.body as RequestData;
-            
+            const requestData: RequestData = await req.json();
+
             const {
                 nameBot,
                 priceNow,
@@ -56,10 +68,14 @@ export async function POST(req: NextRequest) {
                 text: `Nom du bot : ${nameBot}`,
                 attachments: [{
                     filename: "image.png",
-                    content: imageBot.replace("blob:", ""),
+                    content: Buffer.from(imageBot.split(",")[1], 'base64'),
                     contentType: "image/png"
                 }],
-                html: `<h1>Nom du bot : ${nameBot}</h1>
+                html: `
+                <div>
+                <h1>Nom du bot : ${nameBot}</h1>
+                <h2>${hostBot ? "Le bot sera hébergé " : "Pas d'hébergement"}</h2>
+                </div>
                 <h3>Le prix est de ${priceNow}€ avec un hébergement à ${priceMounth}€/mois pour un délai de ${formattedDelay}</h3>
                 <p>Voilà ce que je dois savoir de plus sur le bot :</p>
                 <p>${commentBot}</p>
@@ -85,58 +101,32 @@ export async function POST(req: NextRequest) {
                 text: `Bonjour,
                 Je vous confirme que la commande a bien été envoyée. Vous recevrez un e-mail pour confirmer si j'accepte la mission. 
                 Le paiement s'effectuera via PayPal et aura lieu à la fin du projet, juste avant que je ne vous l'envoie.
-                Bien cordialement`,
-                html: `<p>Bonjour,</p>
-                <br>
-                <p>Je vous confirme que la commande a bien été envoyée. Vous recevrez un e-mail pour confirmer si j'accepte la mission. </p>
-                <p>Le paiement s'effectuera via PayPal et aura lieu à la fin du projet, juste avant que je ne vous l'envoie.</p>
-                <br>
-                <p>Bien cordialement`,
+                Bien cordialement`
             };
 
-            await sendEmail(mailOptions, mailOptionsConfirmation);
+            await sendEmail(mailOptions);
+            await sendEmail(mailOptionsConfirmation);
 
             return NextResponse.json({ success: true });
-        } catch (error : any) {
+        } catch (error: any) {
             console.error("Error sending email:", error);
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
     } else {
-        return NextResponse.json({ error: "Method Not Allowed : " }, { status: 405 });
+        return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
     }
 }
 
-const transporter = nodemailer.createTransport({
-    name: 'tarlie.fr',
-    host: 'mail.tarlie.fr',
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.PRIVARY_MAIL_USER,
-        pass: process.env.PRIVARY_MAIL_PASSWORD
-    }
-});
-
-async function sendEmail(mailOptions: any, mailOptionsConfirmation: any) {
+async function sendEmail(mailOptions: any) {
     return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, function (error: any, info: any) {
+        // @ts-ignore
+        transporter.sendMail(mailOptions, (error: Error | null, info) => {
             if (error) {
                 console.error("Error sending email:", error);
                 reject(error);
             } else {
-                console.log("Email Sent");
+                console.log("Email Sent", info);
                 resolve(info);
-                console.log(info);
-            }
-        });
-        transporter.sendMail(mailOptionsConfirmation, function (error: any, info: any) {
-            if (error) {
-                console.error("Error sending email:", error);
-                reject(error);
-            } else {
-                console.log("Email Sent");
-                resolve(info);
-                console.log(info);
             }
         });
     });

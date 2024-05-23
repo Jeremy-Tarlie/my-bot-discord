@@ -38,13 +38,28 @@ export default function Home() {
     try {
       if (captcha) {
         const url = '/api/sendMail';
-
-        const data = {
+        const blobToBase64 = async (blobUrl: string) => {
+          const response = await fetch(blobUrl);
+          const blob = await response.blob();
+          return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+          });
+      };
+      
+      // Usage
+      const base64Image = await blobToBase64(imageBot);
+      setImageBot(base64Image as string);
+      console.log(imageBot);
+      
+      const data = {
           nameBot,
           priceNow: price.now,
           priceMounth: price.mounth,
           descriptionBot,
-          imgBot: imageBot,
+          imageBot: base64Image,
           hostBot,
           activityBot,
           activityBotDescription,
@@ -54,19 +69,23 @@ export default function Home() {
           jsonData: JSON.stringify(jsonData),
           discord,
           mail,
-        };
-
-        const response = await fetch(url, {
+      };
+      
+      const response = await fetch(url, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
-        });
+      });
+      
 
 
         if (response.ok) {
           alert(`Merci pour votre intérêt! Nous vous répondrons bientôt !`);
+        } else {
+          alert('Excusez-nous! Veuillez réessayer.');
+
         }
       }
       else {
