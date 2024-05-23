@@ -1,0 +1,56 @@
+.title{
+  text-align: center;
+  height: 250px;
+  background-image: url("../public/bot-discord-logo.png");
+  background-size: 10%;
+  background-origin: content-box;
+  background-color: rgb(97, 95, 95);  
+  display: flex;
+  justify-content: center;  
+  margin: -0.5% -5px;
+}
+
+.header{
+  background-color: gray;
+  padding: 10px;
+  margin: auto;
+}
+
+.d_flex{
+  display: flex;
+}
+
+.d_flex_column{
+  display: flex;
+  flex-direction: column;
+}
+
+.justify_space_around{
+  justify-content: space-around;  
+}
+
+.justify_center{
+  justify-content: center;
+}
+
+.justify_between{
+  justify-content: space-between;
+}
+
+.margin_10{
+  margin:  10px 0;
+}
+
+.text_center{
+  text-align: center;
+}
+
+.required{
+  color: red;
+}
+
+@media screen and (max-width: 999px) {
+  .header{
+    width: 90%;
+  }
+}

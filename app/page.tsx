@@ -1,113 +1,143 @@
-import Image from "next/image";
+"use client"
+import React, { useState } from 'react';
+import Header from '@/components/Header';
+import Card from '@/components/presentation/Card';
+import NextStep from '@/components/NextStep';
+import PreviousStep from '@/components/PreviousStep';
+import Bot from '@/components/bot/Bot';
+import Command from '@/components/command/Command';
+
 
 export default function Home() {
+  const [numberStep, setNumberStep] = useState(0);
+  const [price, setPrice] = useState({ now: 0, mounth: 0 });
+
+  const [nameBot, setNameBot] = useState('');
+  const [descriptionBot, setDescriptionBot] = useState('');
+  const [imageBot, setImageBot] = useState('');
+  const [hostBot, setHostBot] = useState(false);
+  const [activityBot, setActivityBot] = useState('');
+  const [activityBotDescription, setActivityBotDescription] = useState('');
+  const [commentBot, setCommentBot] = useState('');
+
+  const [commands, setCommands] = useState([]);
+  const [commandsDescription, setCommandsDescription] = useState([]);
+  const [delay, setDelay] = useState(0);
+  const [jsonData, setJsonData] = useState(null);
+  const [command, setCommand] = useState('');
+  const [description, setDescription] = useState('');
+  const [numberCommand, setNumberCommand] = useState(0);
+  const [discord, setDiscord] = useState('');
+  const [mail, setMail] = useState('');
+
+  const [captcha, setCaptcha] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (captcha) {
+        const url = '/api/sendMail';
+
+        const data = {
+          nameBot,
+          priceNow: price.now,
+          priceMounth: price.mounth,
+          descriptionBot,
+          imgBot: imageBot,
+          hostBot,
+          activityBot,
+          activityBotDescription,
+          commentBot,
+          delay,
+          commands: JSON.stringify(Array.from(commands)),
+          jsonData: JSON.stringify(jsonData),
+          discord,
+          mail,
+        };
+
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+
+        if (response.ok) {
+          alert(`Merci pour votre intérêt! Nous vous répondrons bientôt !`);
+        }
+      }
+      else {
+        alert('Excusez-nous! Veuillez réessayer.');
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Oups ! Malheureusement, une erreur s\'est produite.');
+    }
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main>
+      <Header />
+      <form onSubmit={handleSubmit} method="GET">
+        {numberStep === 0 ? (
+          <>
+            <Card title="Commander le bot de vos rêves" description="Explorez l'opportunité passionnante de personnaliser et d'acquérir le bot parfaitement adapté à vos aspirations et besoins uniques." number={1} />
+            <Card title="Un bot personnalisé avec des fonctions innovantes" description="Découvrez l'exclusivité d'un assistant virtuel façonné selon vos exigences, doté de fonctionnalités novatrices pour une expérience inégalée." number={2} />
+            <Card title="Façonnez votre propre bot, doté de fonctionnalités selon vos préférences." description="Créez votre propre assistant virtuel sur mesure, équipé de fonctionnalités qui correspondent parfaitement à vos préférences individuelles." number={3} />
+          </>
+        ) : numberStep === 1 ? (
+          <Bot
+            price={price}
+            setPrice={setPrice}
+            nameBot={nameBot}
+            setNameBot={setNameBot}
+            descriptionBot={descriptionBot}
+            setDescriptionBot={setDescriptionBot}
+            imageBot={imageBot}
+            setImageBot={setImageBot}
+            hostBot={hostBot}
+            setHostBot={setHostBot}
+            activityBot={activityBot}
+            setActivityBot={setActivityBot}
+            activityBotDescription={activityBotDescription}
+            setActivityBotDescription={setActivityBotDescription}
+            commentBot={commentBot}
+            setCommentBot={setCommentBot}
+          />
+        ) : (
+          <Command
+            price={price}
+            setPrice={setPrice}
+            delay={delay}
+            setDelay={setDelay}
+            commands={commands}
+            setCommands={setCommands}
+            jsonData={jsonData}
+            setJsonData={setJsonData}
+            command={command}
+            setCommand={setCommand}
+            description={description}
+            setDescription={setDescription}
+            numberCommand={numberCommand}
+            setNumberCommand={setNumberCommand}
+            discord={discord}
+            setDiscord={setDiscord}
+            mail={mail}
+            setMail={setMail}
+            commandsDescription={commandsDescription}
+            setCommandsDescription={setCommandsDescription}
+            captcha={captcha}
+            setCaptcha={setCaptcha}
+          />
+        )}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        {numberStep < 2 ? <NextStep numberStep={numberStep} setNumberStep={setNumberStep} /> : null}
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+        {numberStep > 0 ? <PreviousStep numberStep={numberStep} setNumberStep={setNumberStep} /> : null}
+      </form>
     </main>
   );
 }

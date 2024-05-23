@@ -1,0 +1,129 @@
+.list_commands{
+  height: 500px;
+  width: 650px;
+  padding: 2%;
+  overflow:auto;
+  margin: 15px;
+  background-color: rgb(97, 95, 95);  
+}
+
+.list_commands_ul{
+  list-style: none;
+  padding: 0;
+}
+
+.command{
+  border-bottom: 3px solid white;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+
+.checkbox_command{
+  margin-right: 10px;
+}
+
+.prefix{
+  text-align: center;
+  background-color: gray;
+  border-radius: 30px;
+  margin: 0px 15px;
+  padding: 2px 20px;
+}
+
+.delay{
+  margin: 20px 5px;
+  text-align: center;
+}
+
+.delivery{
+  width: 80%;
+  font-size: larger;
+  font-weight: bolder;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 50px;
+} 
+
+.precision{
+  width: 80%;
+  text-align: center;
+  margin: 10px auto;
+  background-color: gray;
+  padding: 10px;
+  border: 2px solid white;
+}
+
+.margin_bot_5{
+  margin-bottom: 5px;
+}
+
+.margin_bot_40{
+  margin-bottom: 40px;
+}
+
+.detail_command{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+
+.tech{
+  text-align: center;
+}
+
+.contact{
+  justify-content: space-around;
+  margin: 10px;
+}
+
+.recaptcha{
+  margin: 10px auto;
+  width: 304px;
+}
+
+@media screen and (max-width: 999px) {
+  .command_all{
+    flex-direction: column;
+  }
+
+  .list_commands{
+    display: flex;
+    width: 90%;
+  }
+
+  .detail_command{
+    width: auto;
+    margin-bottom: 200px;
+  }
+
+  .other_command{
+    margin-bottom: 10px;
+  }
+
+  .parent_list_commands{
+    display: flex;
+    justify-content: center ;
+    margin-bottom: 50px;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+
+
+  .list_commands{
+    width: 600px;
+  }
+
+  .contact{
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .contact_child{
+    margin-bottom: 20px;
+  }
+}
