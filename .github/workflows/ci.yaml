@@ -12,7 +12,6 @@ jobs:
     permissions:
       packages: write
       contents: read
-      attestations: write
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -42,6 +41,6 @@ jobs:
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v1
         with:
-          subject-name: ${{ secrets.DOCKER_USERNAME }}/my_discord_bot
+          subject-name: khraii/my_discord_bot
           subject-digest: ${{ steps.push.outputs.digest }}
           push-to-registry: true
