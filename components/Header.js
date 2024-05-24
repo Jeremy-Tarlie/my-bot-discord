@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className={styles.title}>
         <div className={styles.d_flex}>
-          <h1 className={`${styles.header} text-xl`}>Commande test moi</h1>
+          <h1 className={`${styles.header} text-xl`}>Commande test </h1>
         </div>
     </div>
   )
