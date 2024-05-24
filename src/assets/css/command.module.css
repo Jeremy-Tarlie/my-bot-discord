@@ -7,6 +7,10 @@
   background-color: rgb(97, 95, 95);  
 }
 
+.text_input{
+  color: black;
+}
+
 .list_commands_ul{
   list-style: none;
   padding: 0;

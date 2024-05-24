@@ -10,7 +10,7 @@ const Email = ({styles, styles_command, mail, setMail}) => {
   return (
     <div className={`${styles.d_flex_column} ${styles_command.contact_child}`}>
         <label className={styles.text_center}>Email <span className={styles.required}>*</span></label>
-        <input type='email' onChange={mailChange} value={mail}/>
+        <input type='email' className={`${styles.text_input}`} onChange={mailChange} value={mail}/>
     </div>
   )
 }

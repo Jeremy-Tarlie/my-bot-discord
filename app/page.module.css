@@ -49,6 +49,10 @@
   color: red;
 }
 
+.text_input{
+  color: black;
+}
+
 @media screen and (max-width: 999px) {
   .header{
     width: 90%;
